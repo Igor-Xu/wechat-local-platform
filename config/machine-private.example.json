@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "wechat_cli_exe": "E:\\aicode\\project\\Vault\\AI第二大脑_内容创作系统\\wechat-local-platform\\runtime\\windows-amd64\\wechat-cli.exe",
+  "wcdb_dll": "E:\\aicode\\project\\Vault\\AI第二大脑_内容创作系统\\wechat-local-platform\\runtime\\windows-amd64\\libWCDB.dll",
+  "db_account_root": "C:\\PRIVATE\\WeChatAccountRoot",
+  "managed_key_config": "C:\\PRIVATE\\managed-key.json",
+  "managed_state_dir": "C:\\PRIVATE\\wechat-local-platform-state",
+  "cli_timeout_seconds": 30
+}

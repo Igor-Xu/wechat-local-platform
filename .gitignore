@@ -3,7 +3,6 @@ __pycache__/
 .pytest_cache/
 .artifacts/
 config/*.machine-private.json
-config/*private*.json
 config/*key*.json
 data/
 snapshots/
