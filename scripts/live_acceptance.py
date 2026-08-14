@@ -49,6 +49,8 @@ COLLECTION_KEYS = (
     "notifications",
     "transfers",
     "red_packets",
+    "posts",
+    "media",
     "rows",
 )
 
@@ -304,6 +306,11 @@ def payload_shape(payload: Mapping[str, Any] | None) -> dict[str, Any]:
         if isinstance(data, dict)
         else []
     )
+    primary_counts = (
+        [len(data[key]) for key in COLLECTION_KEYS if isinstance(data.get(key), list)]
+        if isinstance(data, dict)
+        else []
+    )
     counts: list[int] = []
     readable_path_count = 0
 
@@ -327,7 +334,7 @@ def payload_shape(payload: Mapping[str, Any] | None) -> dict[str, Any]:
     return {
         "top_level_fields": top_level_fields,
         "data_fields": data_fields,
-        "result_count": max(counts, default=0),
+        "result_count": max(primary_counts, default=max(counts, default=0)),
         "readable_path_count": readable_path_count,
     }
 
@@ -647,7 +654,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             media_args["local_id"] = local_id
         elif server_id_str is not None:
             media_args["server_id_str"] = server_id_str
-        record_call("media_resources", "media_resources", media_args)
+        media_payload = record_call("media_resources", "media_resources", media_args)
+        media_shape = payload_shape(media_payload)
+        if media_shape["result_count"] == 0:
+            media_payload = record_call("media_resources_global", "media_resources", {"limit": 200, "offset": 0})
+            media_shape = payload_shape(media_payload)
+        report["media_validation"] = {
+            "nonempty": media_shape["result_count"] > 0,
+            "result_count": media_shape["result_count"],
+            "readable_path_count": media_shape["readable_path_count"],
+        }
 
         group = exact_candidate(candidates, group=True)
         if group is not None:
