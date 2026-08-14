@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.artifacts/
+config/*.machine-private.json
+config/*private*.json
+config/*key*.json
+data/
+snapshots/
+exports/
+cache/
+*.db
+*.db-wal
+*.db-shm
+*.dat
+*.key
+*.log
