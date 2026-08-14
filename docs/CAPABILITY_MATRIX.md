@@ -20,3 +20,9 @@ The upstream catalog must attest each mapped operation as `read_only=true`,
 with strict-read-only behavior equal to `same` or
 `allowed_without_writes`. A missing or contradictory attestation stops the
 adapter before any content call.
+
+The 2026-08-14 candidate live run verified the mapped read tools, resolver
+scenarios, Moments feed/search and media resource lookup. The DB/WAL
+immutability and metadata-only report are retained under `evidence/`.
+Production use still requires a new-Codex-task check and separate
+configuration-switch approval.
