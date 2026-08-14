@@ -32,6 +32,13 @@ from adapter.server import (
     source_inventory_metadata,
     serve_jsonl,
 )
+from scripts.live_acceptance import (
+    collection,
+    compare_fingerprints,
+    message_anchor,
+    payload_shape,
+    text_probe,
+)
 
 
 EXPECTED_TOOLS = [
@@ -447,6 +454,49 @@ class LockedRuntimeCatalogTests(unittest.TestCase):
         server = McpServer(WechatCliClient(SubprocessRunner(exe, 30, base_environment={})))
         listed = server.dispatch("tools/list", {})["tools"]
         self.assertEqual([item["name"] for item in listed], EXPECTED_TOOLS)
+
+
+class LiveAcceptanceHarnessTests(unittest.TestCase):
+    def test_metadata_shape_never_contains_payload_values(self):
+        shape = payload_shape(
+            {
+                "ok": True,
+                "data": {
+                    "messages": [
+                        {
+                            "text": "private body",
+                            "sender_wxid": "wxid_private",
+                            "images": [{"path": "C:/private/media.jpg"}],
+                        }
+                    ]
+                },
+            }
+        )
+        encoded = json.dumps(shape)
+        self.assertEqual(shape["result_count"], 1)
+        self.assertEqual(shape["readable_path_count"], 1)
+        self.assertNotIn("private body", encoded)
+        self.assertNotIn("wxid_private", encoded)
+        self.assertNotIn("C:/private", encoded)
+
+    def test_fingerprint_comparison_detects_all_change_classes(self):
+        before = {"a": (10, 1, "same"), "b": (20, 2, "old"), "gone": (1, 1, "gone")}
+        after = {"a": (10, 1, "same"), "b": (21, 3, "new"), "added": (1, 1, "added")}
+        result = compare_fingerprints(before, after)
+        self.assertEqual(result["added"], 1)
+        self.assertEqual(result["removed"], 1)
+        self.assertEqual(result["content_changed"], 1)
+        self.assertEqual(result["size_changed"], 1)
+        self.assertEqual(result["mtime_changed"], 1)
+        self.assertFalse(result["unchanged"])
+
+    def test_probe_and_anchor_are_kept_only_as_return_values(self):
+        messages = [
+            {"id": {"local_id": 456, "server_id_str": "9876543210"}, "text": "这是一个搜索命中测试句子"}
+        ]
+        self.assertEqual(message_anchor(messages), (456, "9876543210"))
+        self.assertIsNotNone(text_probe(messages))
+        self.assertEqual(collection({"data": {"messages": messages}}, ("messages",)), messages)
 
 
 if __name__ == "__main__":

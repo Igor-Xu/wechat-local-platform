@@ -61,4 +61,12 @@ WECHAT_CLI_DISABLE_AUTO_REFRESH=1
 
 它只运行合成 payload、策略测试、锁定哈希和 runtime 静态 catalog/schema 检查，并生成 metadata-only 报告。真实微信验收、Codex 新任务、生产切换和删除/迁移操作必须另行展示批准门。
 
+真实严格只读验收在微信完全退出、相关进程数为 0 后运行：
+
+```powershell
+python .\scripts\live_acceptance.py --config C:\private\wechat-local-platform.machine-private.json
+```
+
+该验收会在同一进程内完成原始 DB/WAL 前后 SHA-256、18 工具候选 MCP 调用、已知命中搜索、精确 message context、resolver 三种行为以及 state/key map/runtime 不变性检查。报告写入 `.artifacts/live-acceptance-report.json`，只包含 metadata，不包含真实 payload。详见 `docs/LIVE_ACCEPTANCE.md`。
+
 架构与威胁模型见 `docs/ARCHITECTURE.md`、`docs/THREAT_MODEL.md` 和 `docs/APPROVAL_GATES.md`。
