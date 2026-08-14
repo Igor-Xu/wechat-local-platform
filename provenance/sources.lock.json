@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-07-28T02:33:36.9664964Z",
+  "target": "windows-amd64",
+  "policy": {
+    "forbid_latest": true,
+    "forbid_main": true,
+    "forbid_at_latest": true,
+    "require_published_sha256": true,
+    "execute_upstream_installers": false,
+    "auto_update": false
+  },
+  "wechat_cli": {
+    "repository_id": 1212371914,
+    "repository": "https://github.com/r266-tech/wechat-cli.git",
+    "tag": "v1.6.20",
+    "tag_object": "158b9015e53cc350a8f3956cc1e32897dadd0692",
+    "commit": "794541d13f8697436919f8c63aea586e3f4291d8",
+    "tree": "f9bc5d91ed5ce52e058b9c0ef05735cd22952a6e",
+    "tag_signature": "none",
+    "tagger_time_utc": "2026-07-15T04:40:42Z",
+    "commit_github_verification": "verified_by_github_ui; not an independently verified signed tag",
+    "release_id": 354207826,
+    "release_url": "https://github.com/r266-tech/wechat-cli/releases/tag/v1.6.20",
+    "release_observed_at": "2026-07-15T05:22:18Z",
+    "license": "MIT",
+    "license_sha256": "27bb479513ef65b019bceb80b2a9614df19687e80ac650b815e1a18d97657710",
+    "license_sha256_basis": "canonical raw LICENSE bytes at the locked commit",
+    "release_inner_license_length": 1087,
+    "release_inner_license_sha256": "280c78448ddde629f36de774fadf3eee6dc23d363261f66c5afcea467e73836f",
+    "windows_asset": {
+      "name": "wechat-cli-v1.6.20-windows-amd64.zip",
+      "asset_id": 477547137,
+      "url": "https://github.com/r266-tech/wechat-cli/releases/download/v1.6.20/wechat-cli-v1.6.20-windows-amd64.zip",
+      "length": 6137243,
+      "sha256": "0b0ba998b1d86209e37310f1166c381d13e9a1978fbcd34f4cc5ccc5cbd8d10b",
+      "checksum_url": "https://github.com/r266-tech/wechat-cli/releases/download/v1.6.20/wechat-cli-v1.6.20-windows-amd64.zip.sha256",
+      "checksum_file_sha256": "b98f1b95fe652c41634b9b994d0a7f8246dfef8d0b6a2dea0ea2862f711d3dd2",
+      "checksum_match_verified": true,
+      "archive_entry_count": 12,
+      "archive_unsafe_entry_count": 0
+      ,"created_at": "2026-07-15T05:13:23Z",
+      "updated_at": "2026-07-15T05:13:26Z",
+      "local_sha256_recomputed": true
+    },
+    "inner_files": {
+      "wechat-cli.exe": {
+        "length": 9508352,
+        "sha256": "1ad112c4ed10e05757c685698a20d181ab0d75ae3dde3d076895cc6947ae91ed",
+        "pe_machine": "0x8664",
+        "architecture": "amd64",
+        "authenticode": "NotSigned"
+      },
+      "libWCDB.dll": {
+        "length": 5294080,
+        "sha256": "beefb9ea3822468116eb86ff49bae6c34e7811916c4c761acef31ec3952da360",
+        "pe_machine": "0x8664",
+        "architecture": "amd64",
+        "authenticode": "NotSigned"
+      },
+      "install.ps1": {
+        "sha256": "da38314ef1785d8202946ae6e6eca314853556c3f2e55480b7d05c4dbf854628",
+        "execute": false
+      },
+      "scripts/install-release.ps1": {
+        "sha256": "a56f75bd216fa152cac2e17b03eb97885ff265d4719e5f017e13fbdcd26fb881",
+        "execute": false
+      }
+    },
+    "outer_installer": {
+      "asset_id": 477528586,
+      "url": "https://github.com/r266-tech/wechat-cli/releases/download/v1.6.20/install-release.ps1",
+      "sha256": "96b614c44b366cc79334fd66a533699ca51d4f9046480b3714eaed941486c181",
+      "checksum_file_sha256": "44f39673871ac2e997ea900671e0080e61c927d1d9187b530ac5ef46af243bf8",
+      "execute": false,
+      "rejected_reasons": [
+        "defaults to latest",
+        "continues when checksum sidecar is missing",
+        "invokes another PowerShell with ExecutionPolicy Bypass"
+      ]
+    },
+    "provenance_limits": {
+      "authenticode": false,
+      "slsa_or_attestation_observed": false,
+      "sbom_observed": false,
+      "release_to_actions_artifact_cryptographic_binding_observed": false,
+      "workflow_actions_pinned_to_commit": false,
+      "runner_image_pinned_by_digest": false,
+      "libwcdb_source_version": "2.1.16",
+      "libwcdb_source_archive_hash_verified_by_upstream_workflow": false
+    }
+  },
+  "wxkey": {
+    "repository_id": 1235219266,
+    "repository": "https://github.com/r266-tech/wxkey.git",
+    "tag": "v1.4.8",
+    "tag_object": "8f1a618732b9faf19873591603ca88d16e46581e",
+    "commit": "9b70eecdde47a7172b19465c3f977c86b6050e8a",
+    "tree": "ba29a0b0aa9c5a2418c44a57eaf693ce85af8ce6",
+    "tag_signature": "none",
+    "tagger_time_utc": "2026-07-15T04:22:46Z",
+    "release_url": "https://github.com/r266-tech/wxkey/releases/tag/v1.4.8",
+    "release_observed_at": "2026-07-15T04:23:48Z",
+    "license": "MIT",
+    "license_sha256": "27bb479513ef65b019bceb80b2a9614df19687e80ac650b815e1a18d97657710",
+    "license_sha256_basis": "canonical raw LICENSE bytes at the locked commit",
+    "uploaded_release_assets": [],
+    "windows_binary_available": false,
+    "published_checksum_available": false,
+    "windows_action": "do_not_install_or_execute; audit source only"
+    ,"page1_hmac_reference": {
+      "path": "internal/verify/verify.go",
+      "git_blob_sha1": "21cfe91ad64466aaf46091ffd834d112ab426715",
+      "canonical_blob_sha256": "13e319a18389116dcbc7d052b304a03e8e250ab379a83cb247a8e5e88f55c6d2"
+    }
+  },
+  "build_tools": {
+    "go": {
+      "version": "go1.26.5",
+      "stable": true,
+      "platform": "windows-amd64",
+      "kind": "archive",
+      "filename": "go1.26.5.windows-amd64.zip",
+      "url": "https://go.dev/dl/go1.26.5.windows-amd64.zip",
+      "length": 74927386,
+      "sha256": "97e6b2a833b6d89f9ff17d25419ac0a7e3b482a044e9ab18cdef834bd834fd38",
+      "source": "https://go.dev/dl/?mode=json&include=all",
+      "installation_scope": "portable project-local only",
+      "global_path_change": false,
+      "auto_toolchain_download": false
+    },
+    "module_locks": {
+      "wechat_cli_go_mod_sha256": "adf3e8b0d4b688576d8b89336cb78a079893878107ef562a2dbc9048a2399ad2",
+      "wechat_cli_go_sum_sha256": "d54a51179040678f10a0313b9b645d28a9f5d7f55b282a2d6f7e981f6ec76cf9",
+      "wxkey_go_mod_sha256": "87e142208bc355d959b4f023174e0ff4e5ced29f9485cbb0e218d2d89858e6b7",
+      "wxkey_go_sum_sha256": "d27c46dc7df00798af0bb92a8ab95a3b76932a56a51d67d678e59e58d0e113ad"
+    }
+  },
+  "issues": [
+    {
+      "repository": "r266-tech/wechat-cli",
+      "number": 8,
+      "url": "https://github.com/r266-tech/wechat-cli/issues/8",
+      "state": "OPEN",
+      "updated_at": "2026-06-15T08:32:23Z",
+      "body_sha256": "e48f2477ba988ca7fd334fa990947ad7e3bf55a8ab26bb1054a2c81718912475"
+    },
+    {
+      "repository": "r266-tech/wechat-cli",
+      "number": 10,
+      "url": "https://github.com/r266-tech/wechat-cli/issues/10",
+      "state": "OPEN",
+      "updated_at": "2026-07-12T06:02:27Z",
+      "body_sha256": "9157a57b0868e27adb581163dbb9c6843ee4702d3e775aaac81a808ab3b06d88"
+    },
+    {
+      "repository": "r266-tech/wechat-cli",
+      "number": 14,
+      "url": "https://github.com/r266-tech/wechat-cli/issues/14",
+      "state": "OPEN",
+      "updated_at": "2026-07-22T02:18:21Z",
+      "body_sha256": "a0835c20bc97abc6ca6d45da4b337171ca5508b8ba53dae63d0b63de0ed28a34"
+    }
+  ]
+}

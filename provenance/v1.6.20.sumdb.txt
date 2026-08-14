@@ -1,0 +1,9 @@
+57521329
+github.com/r266-tech/wechat-cli v1.6.20 h1:bAlae5jkHU7aKRvtFmvKs4efsBp62Y+6/0H394J1y/g=
+github.com/r266-tech/wechat-cli v1.6.20/go.mod h1:32XeJtJO5ct45mnP6o5odPXO6eGLFKKo2JV91SZlDT0=
+
+go.sum database tree
+59768189
+PoOVsHTll/cRHBcIOagfdn6Ek7i0x0VWw1WK1iYXPWg=
+
+— sum.golang.org Az3grpwa1Ck4uookEyv6nDUqllNyb3v0sukhecElFw9F7nPP/luk/ShVqXJCH+1P0PYoriHfXTxK2q/G1LvQP3ITzgs=
