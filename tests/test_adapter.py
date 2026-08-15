@@ -403,6 +403,10 @@ class AdapterPolicyTests(unittest.TestCase):
             matched_salt = bytes.fromhex("11" * 16)
             (storage / "message_0.db").write_bytes(matched_salt + b"encrypted")
             (storage / "message_0.db-wal").write_bytes(b"wal")
+            unsupported = root / "db_storage" / "chatbot"
+            unsupported.mkdir()
+            missing_salt = bytes.fromhex("22" * 16)
+            (unsupported / "chatbot_message.db").write_bytes(missing_salt + b"encrypted")
             key_path = base / "managed-key.json"
             key_path.write_text(
                 json.dumps({"schema_version": 2, "keys": {matched_salt.hex(): "secret-key"}}),
@@ -416,12 +420,20 @@ class AdapterPolicyTests(unittest.TestCase):
                 ),
                 project_root=base,
             )
-            self.assertEqual(visible["configured_db_count"], 1)
-            self.assertTrue(visible["all_configured_dbs_keyed"])
+            self.assertEqual(visible["configured_db_count"], 2)
+            self.assertEqual(visible["message_db_count"], 1)
+            self.assertEqual(visible["public_tool_required_db_count"], 1)
+            self.assertEqual(visible["public_tool_unaddressed_db_count"], 1)
+            self.assertEqual(visible["public_tool_missing_key_db_count"], 0)
+            self.assertEqual(visible["unaddressed_missing_key_db_count"], 1)
+            self.assertTrue(visible["all_public_tool_dbs_keyed"])
+            self.assertFalse(visible["all_configured_dbs_keyed"])
             encoded = json.dumps(visible)
             self.assertNotIn(str(root), encoded)
             self.assertNotIn("message_0.db", encoded)
+            self.assertNotIn("chatbot_message.db", encoded)
             self.assertNotIn(matched_salt.hex(), encoded)
+            self.assertNotIn(missing_salt.hex(), encoded)
             self.assertNotIn("secret-key", encoded)
 
     def test_protocol_notifications_are_not_responses(self):

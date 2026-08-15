@@ -45,6 +45,14 @@ PRIVATE_UPSTREAM_ENV_FIELDS: Mapping[str, str] = {
 }
 ALLOWED_UPSTREAM_ENV = frozenset(PRIVATE_UPSTREAM_ENV_FIELDS.values())
 
+# These are the db_storage roots reached by the fixed eighteen-tool MCP
+# surface in the locked v1.6.20 engine.  New Weixin database families remain
+# visible in aggregate diagnostics, but they are not treated as a dependency
+# of tools that cannot address them.
+SUPPORTED_DIRECT_DB_SUBDIRS = frozenset(
+    {"contact", "favorite", "general", "message", "session", "sns"}
+)
+
 
 @dataclass(frozen=True)
 class ToolSpec:
@@ -578,22 +586,43 @@ def source_inventory_metadata(
     }
     key_map_shape_valid = len(salt_tokens) == len(keys)
 
+    def supported_by_public_tools(database: Path) -> bool:
+        try:
+            relative = database.relative_to(db_storage)
+        except ValueError:
+            return False
+        return bool(relative.parts) and relative.parts[0].lower() in SUPPORTED_DIRECT_DB_SUBDIRS
+
+    supported_databases = [item for item in databases if supported_by_public_tools(item)]
+    unsupported_databases = [item for item in databases if not supported_by_public_tools(item)]
     keyed_db_count = 0
     missing_key_db_count = 0
     unreadable_db_header_count = 0
+    supported_keyed_db_count = 0
+    supported_missing_key_db_count = 0
+    supported_unreadable_db_header_count = 0
     for database in databases:
+        supported = supported_by_public_tools(database)
         try:
             with database.open("rb") as stream:
                 salt = stream.read(16)
         except OSError:
             unreadable_db_header_count += 1
+            if supported:
+                supported_unreadable_db_header_count += 1
             continue
         if len(salt) != 16:
             unreadable_db_header_count += 1
+            if supported:
+                supported_unreadable_db_header_count += 1
         elif salt.hex() in salt_tokens:
             keyed_db_count += 1
+            if supported:
+                supported_keyed_db_count += 1
         else:
             missing_key_db_count += 1
+            if supported:
+                supported_missing_key_db_count += 1
 
     def latest_timestamp(paths: Sequence[Path]) -> str | None:
         try:
@@ -605,8 +634,8 @@ def source_inventory_metadata(
     source_latest = latest_timestamp([*databases, *wal_files])
     message_databases = [
         item
-        for item in databases
-        if re.search(r"(?i)(?:message|biz_message|fts)", item.relative_to(db_storage).as_posix())
+        for item in supported_databases
+        if item.relative_to(db_storage).parts[0].lower() == "message"
     ]
     marker_pattern = re.compile(r"(?i)(?:backup|snapshot|cache|temp|archive|benchmark)")
     root_has_backup_marker = any(marker_pattern.search(part) is not None for part in root.parts)
@@ -622,11 +651,28 @@ def source_inventory_metadata(
         "configured_wal_count": len(wal_files),
         "configured_shm_count": len(shm_files),
         "message_db_count": len(message_databases),
+        "public_tool_required_db_count": len(supported_databases),
+        "public_tool_unaddressed_db_count": len(unsupported_databases),
         "key_map_entry_count": len(keys),
         "keyed_db_count": keyed_db_count,
         "missing_key_db_count": missing_key_db_count,
         "unreadable_db_header_count": unreadable_db_header_count,
+        "public_tool_keyed_db_count": supported_keyed_db_count,
+        "public_tool_missing_key_db_count": supported_missing_key_db_count,
+        "public_tool_unreadable_db_header_count": supported_unreadable_db_header_count,
+        "unaddressed_keyed_db_count": keyed_db_count - supported_keyed_db_count,
+        "unaddressed_missing_key_db_count": missing_key_db_count - supported_missing_key_db_count,
+        "unaddressed_unreadable_db_header_count": (
+            unreadable_db_header_count - supported_unreadable_db_header_count
+        ),
         "key_map_shape_valid": key_map_shape_valid,
+        "all_public_tool_dbs_keyed": (
+            key_map_shape_valid
+            and bool(supported_databases)
+            and supported_keyed_db_count == len(supported_databases)
+            and supported_missing_key_db_count == 0
+            and supported_unreadable_db_header_count == 0
+        ),
         "all_configured_dbs_keyed": (
             key_map_shape_valid
             and keyed_db_count == len(databases)
