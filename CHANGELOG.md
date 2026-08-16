@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.2 - 2026-08-17
 
 - Reworked the public README around the accepted direct-only 18-tool Beta,
   including architecture, safety boundaries, installation and Codex setup.

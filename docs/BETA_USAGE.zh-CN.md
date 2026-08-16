@@ -50,7 +50,7 @@ WECHAT_CLI_DISABLE_AUTO_REFRESH=1
 先核验 ZIP：
 
 ```powershell
-$version = "0.1.1"
+$version = "0.1.2"
 $zip = ".\wechat-local-platform-$version.zip"
 $sidecar = ".\wechat-local-platform-$version.zip.sha256"
 $expected = ((Get-Content -LiteralPath $sidecar -Raw).Trim() -split "\s+")[0].ToLowerInvariant()
@@ -69,10 +69,6 @@ Set-Location C:\Tools\wechat-local-platform
 New-Item -ItemType Directory -Force .\.local | Out-Null
 Copy-Item .\config\machine-private.example.json .\.local\machine.json
 ```
-
-`v0.1.1` Release 内的示例早于 Python 运行时锁定字段，不能原样使用。请对照仓库当前
-[`machine-private.example.json`](../config/machine-private.example.json) 补齐
-`python_exe` 和 `python_sha256`；下一版 Beta 会把修正后的示例收入发行包。
 
 编辑 `.local\machine.json`：
 

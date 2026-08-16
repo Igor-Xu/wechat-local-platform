@@ -26,7 +26,7 @@ Codex
 Codex 产品、账号和组织策略由模型服务处理或保留。项目本身不上传数据库、key 或原始文件，
 也不会把查询结果另写到本地明文存储；它不能替代你对 Codex 数据控制设置的判断。
 
-当前测试版：[v0.1.1 Beta](https://github.com/Igor-Xu/wechat-local-platform/releases/tag/v0.1.1)
+当前测试版：[v0.1.2 Beta](https://github.com/Igor-Xu/wechat-local-platform/releases/tag/v0.1.2)
 
 ## 当前验证状态
 
@@ -97,8 +97,8 @@ Codex 产品、账号和组织策略由模型服务处理或保留。项目本�
 下载 ZIP、`.zip.sha256` 和 `FILE_MANIFEST.json` 后，在 PowerShell 中执行：
 
 ```powershell
-$zip = ".\wechat-local-platform-0.1.1.zip"
-$sidecar = ".\wechat-local-platform-0.1.1.zip.sha256"
+$zip = ".\wechat-local-platform-0.1.2.zip"
+$sidecar = ".\wechat-local-platform-0.1.2.zip.sha256"
 $expected = ((Get-Content -LiteralPath $sidecar -Raw).Trim() -split "\s+")[0].ToLowerInvariant()
 $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath $zip).Hash.ToLowerInvariant()
 if ($actual -ne $expected) { throw "release SHA-256 mismatch" }
@@ -112,10 +112,6 @@ if ($actual -ne $expected) { throw "release SHA-256 mismatch" }
 New-Item -ItemType Directory -Force .\.local | Out-Null
 Copy-Item .\config\machine-private.example.json .\.local\machine.json
 ```
-
-> `v0.1.1` Release 内的示例早于 Python 运行时锁定字段，不能原样使用。请对照当前
-> [`machine-private.example.json`](config/machine-private.example.json) 补齐
-> `python_exe` 和 `python_sha256`；下一版 Beta 会把修正后的示例收入发行包。
 
 编辑 `.local\machine.json`，填写本机绝对路径，并替换 Python SHA-256：
 
