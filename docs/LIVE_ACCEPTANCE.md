@@ -5,7 +5,7 @@
 The user must manually exit Weixin and keep it closed. Both `Weixin.exe` and
 `WeChat.exe` process counts must be zero. A nonzero count stops the harness
 before it opens the machine-private config, hashes a database or starts the
-candidate adapter.
+production adapter.
 
 ## One-run sequence
 
@@ -15,7 +15,7 @@ candidate adapter.
 3. Hash every original DB and WAL; hash SHM separately.
 4. Hash the managed key map, private config, runtime files and managed state
    tree.
-5. Start the candidate stdio MCP and require the exact 18-tool inventory.
+5. Start the stdio MCP and require the exact 18-tool inventory.
 6. Call metadata-only `status` and require direct/live/strict/no-fallback gates.
 7. Exercise sessions, contacts, unread, resolver behavior, timeline, exact
    context, known-hit search, search context, events, group members, media,
@@ -34,7 +34,7 @@ Any of the following makes the run fail:
 
 - a Weixin process exists before or after the run;
 - locked runtime validation fails;
-- the tool inventory differs from the candidate allowlist;
+- the tool inventory differs from the production allowlist;
 - any status safety gate is false;
 - an ordinary tool call fails or required live anchor cannot be found;
 - DB, WAL, managed state, key map, config or runtime changes;

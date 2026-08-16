@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+- Reworked the public README around the accepted direct-only 18-tool Beta,
+  including architecture, safety boundaries, installation and Codex setup.
+- Added the MIT license and a Chinese Windows amd64 Beta usage guide.
+- Replaced the machine-private example's workstation-specific path with public
+  placeholders and documented the locked Python identity fields.
+- Updated architecture, capability, support and approval documents to reflect
+  the completed production switch while keeping new-host rollout gates.
+- Clarified that the adapter does not persist successful payloads, while
+  requested content can still enter the Codex task and be subject to the
+  applicable Codex product and organization data controls.
+
 ## 0.1.1 - 2026-08-16
 
 - Enabled the complete eighteen-tool MCP surface in the machine-global Codex

@@ -1,6 +1,6 @@
 # Approval gates
 
-Normal bounded reads are the only operations in the candidate MCP surface.
+Normal bounded reads are the only operations in the production MCP surface.
 Each operation below remains outside the normal server until its own scope,
 destination and rollback are approved.
 
@@ -11,8 +11,9 @@ destination and rollback are approved.
 3. **Chat export** — a user-selected chat, exact format and destination.
 4. **Codex configuration** — backup, exact entry, permissions, impact and
    restore command shown before writing.
-5. **Production switch** — live end-to-end acceptance and a new Codex task
-   must pass before replacing the existing nine-tool entry.
+5. **New-host or changed-runtime rollout** — live end-to-end acceptance must
+   pass before an explicit Codex configuration change; a restarted, genuinely
+   new Codex task must then verify the exact 18-tool surface and safety status.
 
 No approval can enable snapshot fallback or arbitrary SQL. Those behaviors are
 intentionally absent from this product boundary.

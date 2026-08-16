@@ -1,6 +1,6 @@
 # Capability matrix
 
-| Candidate tool | Upstream source | Normal response policy | Persistent local write |
+| Production tool | Upstream source | Normal response policy | Persistent local write |
 |---|---|---|---|
 | status | read_os | metadata-only, redacted | no |
 | sessions / unread | sessions / unread | upstream structured payload | no; unread may report unavailable if its existing metadata capability is absent |
@@ -21,8 +21,12 @@ with strict-read-only behavior equal to `same` or
 `allowed_without_writes`. A missing or contradictory attestation stops the
 adapter before any content call.
 
-The 2026-08-14 candidate live run verified the mapped read tools, resolver
-scenarios, Moments feed/search and media resource lookup. The DB/WAL
-immutability and metadata-only report are retained under `evidence/`.
-Production use still requires a new-Codex-task check and separate
-configuration-switch approval.
+The 2026-08-14 live run verified the mapped read tools, resolver scenarios,
+Moments feed/search and media resource lookup. The DB/WAL immutability and
+metadata-only report are retained under `evidence/`. The project MCP was then
+switched with explicit approval; the complete 18-tool surface and direct-only
+metadata status were verified in a restarted, genuinely new Codex task.
+
+These results describe the accepted machine, not universal compatibility. Each
+new host or materially changed runtime/data layout must repeat the rollout
+gates in `BETA_USAGE.zh-CN.md`.

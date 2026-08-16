@@ -46,12 +46,16 @@ filters and before/after message anchors. This avoids offset drift when new
 messages arrive. Context is an exact anchor operation: local/server message
 identifiers must come from a prior requested result or be explicitly supplied.
 
-## Production migration
+## Production state
 
-The candidate project remains beside the current production adapter until:
+The accepted deployment uses this repository's adapter as the sole production
+source for `wechat_local_access_windows`. Its normal path is direct-only and
+contains no snapshot or fallback branch. The original rollout passed live
+DB/WAL immutability checks, all 18 structured tool scenarios and a genuinely
+new Codex-task inventory/status check.
 
-- the live DB/WAL hash baseline and post-run comparison pass;
-- all 18 tools that are present on this machine complete structured calls;
-- a new Codex task validates the intended MCP surface;
-- snapshot-to-direct rollback is rehearsed;
-- the configuration switch is separately approved.
+That evidence is machine-specific. A new host, account, Weixin version,
+runtime, key map or public schema requires a new rollout: first offline tests,
+then separately approved live acceptance, then an explicit Codex configuration
+change and new-task check. A failed rollout must preserve the previous working
+configuration; it must not introduce snapshot fallback.

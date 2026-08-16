@@ -1,11 +1,11 @@
 # Local WeChat platform development boundary
 
-This repository is a candidate replacement for the existing production
-`wechat_local_access_windows` server. Until a separately documented production
-switch is approved and accepted, the parent workspace's existing nine-tool
-server remains the only production WeChat access path.
+This repository contains the production source for the project-configured
+`wechat_local_access_windows` server. The accepted deployment exposes exactly
+the eighteen tools in `adapter/server.py`; historical nine-tool adapters and
+rollout backups are audit material, not production fallbacks.
 
-The candidate server must always:
+The production server must always:
 
 - use the locked Windows amd64 `wechat-cli.exe` and `libWCDB.dll`;
 - launch an absolute executable with an argv array and `shell=false`;

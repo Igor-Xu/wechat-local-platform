@@ -31,6 +31,7 @@ pages, private configuration paths or debug parser state.
 ## Residual risks
 
 The pinned upstream binary is not Authenticode-signed and libWCDB provenance is
-limited by the upstream release evidence. The current machine's key-agent and
-future Weixin-version compatibility are not solved by M2. A live acceptance is
-required before production use.
+limited by the upstream release evidence. Automatic key maintenance and future
+Weixin-version compatibility are not solved by this Beta. The accepted live
+run is machine-specific; a new host or materially changed runtime/data layout
+requires another live acceptance before its production use.
